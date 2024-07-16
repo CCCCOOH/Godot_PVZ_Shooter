@@ -1,0 +1,171 @@
+[gd_scene load_steps=13 format=3 uid="uid://c0xxf8hox50fd"]
+
+[ext_resource type="Texture2D" uid="uid://bdqmqg0k71wj3" path="res://backgrounds/grass_background.png" id="1_xv5j6"]
+[ext_resource type="Script" path="res://scenes/Player.gd" id="2_3o0y0"]
+[ext_resource type="Texture2D" uid="uid://b24xg4cbb413y" path="res://player/player.png" id="2_3vp16"]
+[ext_resource type="PackedScene" uid="uid://b3slqyhs2wbk4" path="res://bullets/bullet.tscn" id="4_e72ov"]
+[ext_resource type="PackedScene" uid="uid://du41kxsvv2i26" path="res://enemy/enemy.tscn" id="5_d4cux"]
+[ext_resource type="Script" path="res://scenes/EnemySpawner.gd" id="6_pkqkr"]
+[ext_resource type="PackedScene" uid="uid://cwhu7le1031cr" path="res://enemy/enemy_big.tscn" id="7_t0fan"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_b7cmc"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_kstq7"]
+normal = Vector2(0, 1)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6asxo"]
+radius = 40.0
+height = 88.0
+
+[sub_resource type="Animation" id="Animation_0ymti"]
+resource_name = "idle"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tshb2"]
+_data = {
+"idle": SubResource("Animation_0ymti")
+}
+
+[node name="World" type="Node2D"]
+
+[node name="GrassBackground" type="Sprite2D" parent="."]
+texture = ExtResource("1_xv5j6")
+centered = false
+
+[node name="BottomBorder" type="StaticBody2D" parent="."]
+position = Vector2(337, 566)
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomBorder"]
+shape = SubResource("WorldBoundaryShape2D_b7cmc")
+
+[node name="LeftBorder" type="StaticBody2D" parent="."]
+position = Vector2(256, 345)
+rotation = 1.5708
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftBorder"]
+shape = SubResource("WorldBoundaryShape2D_b7cmc")
+
+[node name="RightBorder" type="StaticBody2D" parent="."]
+position = Vector2(1392, 378)
+rotation = 4.71239
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightBorder"]
+shape = SubResource("WorldBoundaryShape2D_b7cmc")
+
+[node name="TopBorder" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopBorder"]
+shape = SubResource("WorldBoundaryShape2D_kstq7")
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(453, 313)
+collision_mask = 6
+script = ExtResource("2_3o0y0")
+bullet_scene = ExtResource("4_e72ov")
+
+[node name="Sprite2D" type="Node2D" parent="Player"]
+scale = Vector2(-1, 1)
+
+[node name="Face" type="Sprite2D" parent="Player/Sprite2D"]
+texture = ExtResource("2_3vp16")
+region_enabled = true
+region_rect = Rect2(77, 72, 70, 63)
+
+[node name="Mouse" type="Sprite2D" parent="Player/Sprite2D"]
+position = Vector2(42, -9)
+texture = ExtResource("2_3vp16")
+region_enabled = true
+region_rect = Rect2(162, 51, 34, 49)
+
+[node name="body-1" type="Sprite2D" parent="Player/Sprite2D"]
+position = Vector2(-1, 35)
+texture = ExtResource("2_3vp16")
+region_enabled = true
+region_rect = Rect2(256, 92, 15, 12)
+
+[node name="body-2" type="Sprite2D" parent="Player/Sprite2D"]
+position = Vector2(3, 49)
+texture = ExtResource("2_3vp16")
+region_enabled = true
+region_rect = Rect2(260, 110, 15, 19)
+
+[node name="leave-1" type="Sprite2D" parent="Player/Sprite2D"]
+position = Vector2(-1, 49)
+texture = ExtResource("2_3vp16")
+region_enabled = true
+region_rect = Rect2(336, 64, 72, 40)
+
+[node name="leave-2" type="Sprite2D" parent="Player/Sprite2D"]
+position = Vector2(-32, 51)
+texture = ExtResource("2_3vp16")
+region_enabled = true
+region_rect = Rect2(312, 80, 24, 32)
+
+[node name="leave-3" type="Sprite2D" parent="Player/Sprite2D"]
+position = Vector2(31, 42)
+texture = ExtResource("2_3vp16")
+region_enabled = true
+region_rect = Rect2(408, 64, 16, 32)
+
+[node name="leave-4" type="Sprite2D" parent="Player/Sprite2D"]
+position = Vector2(-41, 2)
+texture = ExtResource("2_3vp16")
+region_enabled = true
+region_rect = Rect2(48, 72, 16, 24)
+
+[node name="leave-5" type="Sprite2D" parent="Player/Sprite2D"]
+position = Vector2(-53, 6)
+texture = ExtResource("2_3vp16")
+region_enabled = true
+region_rect = Rect2(288, 48, 40, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(0, 14)
+shape = SubResource("CapsuleShape2D_6asxo")
+
+[node name="ShootPosRight" type="Marker2D" parent="Player"]
+unique_name_in_owner = true
+position = Vector2(55, -9)
+
+[node name="ShootTimer" type="Timer" parent="Player"]
+wait_time = 0.2
+one_shot = true
+
+[node name="ShootPosLeft" type="Marker2D" parent="Player"]
+unique_name_in_owner = true
+position = Vector2(-56, -9)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+libraries = {
+"": SubResource("AnimationLibrary_tshb2")
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="EnemySpawner" type="Marker2D" parent="."]
+position = Vector2(1113, 333)
+script = ExtResource("6_pkqkr")
+enemy_scenes = Array[PackedScene]([ExtResource("5_d4cux"), ExtResource("7_t0fan")])
+
+[node name="EnemySpawner2" type="Marker2D" parent="."]
+position = Vector2(1113, 229)
+script = ExtResource("6_pkqkr")
+
+[node name="EnemySpawner3" type="Marker2D" parent="."]
+position = Vector2(1113, 133)
+script = ExtResource("6_pkqkr")
+
+[node name="EnemySpawner4" type="Marker2D" parent="."]
+position = Vector2(1113, 421)
+script = ExtResource("6_pkqkr")
+
+[node name="EnemySpawner5" type="Marker2D" parent="."]
+position = Vector2(1113, 525)
+script = ExtResource("6_pkqkr")

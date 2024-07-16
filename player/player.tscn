@@ -1,0 +1,97 @@
+[gd_scene load_steps=7 format=3 uid="uid://cwrnvn4hb2vd7"]
+
+[ext_resource type="Script" path="res://player/Player.gd" id="1_mqa3w"]
+[ext_resource type="PackedScene" uid="uid://b3slqyhs2wbk4" path="res://bullets/bullet.tscn" id="2_8u1vt"]
+[ext_resource type="Texture2D" uid="uid://b24xg4cbb413y" path="res://player/player.png" id="3_sj28h"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6asxo"]
+radius = 40.0
+height = 88.0
+
+[sub_resource type="Animation" id="Animation_0ymti"]
+resource_name = "idle"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tshb2"]
+_data = {
+"idle": SubResource("Animation_0ymti")
+}
+
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(453, 313)
+collision_mask = 2
+script = ExtResource("1_mqa3w")
+NowBullet = ExtResource("2_8u1vt")
+PlayerInput = Array[String](["move_left", "move_right", "move_up", "move_down", "shoot"])
+shoot_gap_time = 0.2
+
+[node name="Sprite2D" type="Node2D" parent="."]
+
+[node name="Face" type="Sprite2D" parent="Sprite2D"]
+texture = ExtResource("3_sj28h")
+region_enabled = true
+region_rect = Rect2(77, 72, 70, 63)
+
+[node name="Mouse" type="Sprite2D" parent="Sprite2D"]
+position = Vector2(42, -9)
+texture = ExtResource("3_sj28h")
+region_enabled = true
+region_rect = Rect2(162, 51, 34, 49)
+
+[node name="body-1" type="Sprite2D" parent="Sprite2D"]
+position = Vector2(-1, 35)
+texture = ExtResource("3_sj28h")
+region_enabled = true
+region_rect = Rect2(256, 92, 15, 12)
+
+[node name="body-2" type="Sprite2D" parent="Sprite2D"]
+position = Vector2(3, 49)
+texture = ExtResource("3_sj28h")
+region_enabled = true
+region_rect = Rect2(260, 110, 15, 19)
+
+[node name="leave-1" type="Sprite2D" parent="Sprite2D"]
+position = Vector2(-1, 49)
+texture = ExtResource("3_sj28h")
+region_enabled = true
+region_rect = Rect2(336, 64, 72, 40)
+
+[node name="leave-2" type="Sprite2D" parent="Sprite2D"]
+position = Vector2(-32, 51)
+texture = ExtResource("3_sj28h")
+region_enabled = true
+region_rect = Rect2(312, 80, 24, 32)
+
+[node name="leave-3" type="Sprite2D" parent="Sprite2D"]
+position = Vector2(31, 42)
+texture = ExtResource("3_sj28h")
+region_enabled = true
+region_rect = Rect2(408, 64, 16, 32)
+
+[node name="leave-4" type="Sprite2D" parent="Sprite2D"]
+position = Vector2(-41, 2)
+texture = ExtResource("3_sj28h")
+region_enabled = true
+region_rect = Rect2(48, 72, 16, 24)
+
+[node name="leave-5" type="Sprite2D" parent="Sprite2D"]
+position = Vector2(-53, 6)
+texture = ExtResource("3_sj28h")
+region_enabled = true
+region_rect = Rect2(288, 48, 40, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 14)
+shape = SubResource("CapsuleShape2D_6asxo")
+
+[node name="ShootPosRight" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(55, -9)
+
+[node name="ShootTimer" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_tshb2")
+}

@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://cwhu7le1031cr"]
+
+[ext_resource type="Script" path="res://enemy/Enemy.gd" id="1_0n1v6"]
+[ext_resource type="Texture2D" uid="uid://bhnaopt7bx2lh" path="res://enemy/enemy-sheet.png" id="2_pm5if"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kpu40"]
+radius = 23.0
+height = 92.0
+
+[node name="EnemyBig" type="CharacterBody2D" groups=["enemy"]]
+scale = Vector2(1.5, 1.5)
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_0n1v6")
+move_speed = 25.0
+health = 150.0
+
+[node name="Sprite2D" type="Node2D" parent="."]
+
+[node name="Head" type="Sprite2D" parent="Sprite2D"]
+texture = ExtResource("2_pm5if")
+region_enabled = true
+region_rect = Rect2(2, 10, 51, 47)
+
+[node name="Body" type="Sprite2D" parent="Sprite2D"]
+position = Vector2(23, 37)
+texture = ExtResource("2_pm5if")
+region_enabled = true
+region_rect = Rect2(2, 163, 51, 61)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(11, 19)
+rotation = -0.523599
+shape = SubResource("CapsuleShape2D_kpu40")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+offset_left = -31.0
+offset_top = -56.0
+offset_right = 52.0
+offset_bottom = -29.0
